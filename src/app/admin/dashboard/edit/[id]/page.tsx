@@ -243,7 +243,7 @@ export default function EditProdukPage() {
                 Edit Produk
               </h1>
               <p className="text-sm sm:text-base text-gray-500 mt-1">
-                Perbarui informasi produk kebaya Anda
+                Perbarui informasi produk Anda
               </p>
             </div>
           </div>

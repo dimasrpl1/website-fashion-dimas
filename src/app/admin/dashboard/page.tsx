@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation'
 import { supabase } from '@/lib/supabase'
 import { Button } from '../../../components/ui/button'
 import { PencilIcon, PlusIcon, ChevronLeft, ChevronRight, LogOut, Package } from 'lucide-react'
-import Image from 'next/image'
+// import Image from 'next/image'
 
 interface Produk {
   id: string
@@ -142,17 +142,17 @@ export default function AdminDashboardPage() {
               <div className="relative w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 flex-shrink-0">
 
 
-                <Image
+                {/* <Image
                   src="/image/logo.png"
                   alt="Diyaning Kebaya Logo"
                   fill
                   className="object-contain rounded-lg"
                   priority
-                />
+                /> */}
               </div>
               <div className="flex flex-col justify-center min-w-0">
                 <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900 tracking-tight leading-tight">
-                  Diyaning Kebaya
+                  nama toko
                 </h1>
                 <p className="text-xs sm:text-sm text-gray-500 font-medium hidden sm:block">
                   Admin Dashboard

@@ -123,7 +123,7 @@ export default function CreateProdukPage() {
                 Tambah Produk Baru
               </h1>
               <p className="text-sm sm:text-base text-gray-500 mt-1">
-                Lengkapi informasi produk kebaya Anda
+                Lengkapi informasi produk Anda
               </p>
             </div>
           </div>
@@ -154,7 +154,7 @@ export default function CreateProdukPage() {
                   value={nama}
                   onChange={(e) => setNama(e.target.value)}
                   className="w-full text-black px-4 py-3 sm:py-4 text-sm sm:text-base border-2 border-gray-200 rounded-xl focus:border-gray-400 focus:ring-0 transition-colors duration-200 bg-gray-50 focus:bg-white"
-                  placeholder="Contoh: Kebaya Modern Bordir Bunga"
+                  placeholder="Contoh: Kebaya Modern"
                   required
                 />
               </div>
@@ -243,7 +243,7 @@ export default function CreateProdukPage() {
                       <Upload size={24} className="sm:w-8 sm:h-8 text-gray-400" />
                     </div>
                     <h3 className="text-lg sm:text-xl font-semibold text-gray-900 mb-2">
-                      Upload Gambar Kebaya
+                      Upload Gambar Produk
                     </h3>
                     <p className="text-sm sm:text-base text-gray-500 mb-4">
                       Drag & drop gambar atau klik untuk memilih
