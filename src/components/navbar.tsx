@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import Image from 'next/image';
+// import Image from 'next/image';
 import Link from 'next/link';
 
 export default function Navbar() {
@@ -18,24 +18,24 @@ export default function Navbar() {
       
       <div className="relative">
         <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 xl:px-12">
-          <div className="flex items-center justify-between h-16 sm:h-18 md:h-20 lg:h-20 xl:h-22">
+          <div className="flex items-center justify-between h-14 sm:h-16 md:h-18 lg:h-20 xl:h-22">
             
             {/* Logo Section - Refined */}
-            <div className="flex items-center gap-3 sm:gap-4 group">
-              <div className="relative w-10 h-10 sm:w-12 sm:h-12 md:w-13 md:h-13 lg:w-12 lg:h-12 xl:w-14 xl:h-14 transition-all duration-500 group-hover:scale-110 group-hover:rotate-3">
-                <Image
+            <div className="flex items-center gap-2 sm:gap-3 group">
+              <div className="relative w-8 h-8 sm:w-10 sm:h-10 md:w-11 md:h-11 lg:w-12 lg:h-12 xl:w-14 xl:h-14 transition-all duration-500 group-hover:scale-110 group-hover:rotate-3">
+                {/* <Image
                   src="/image/log.png"
                   alt="Logo"
                   fill
                   className="object-contain filter drop-shadow-sm group-hover:drop-shadow-md transition-all duration-500"
                   priority
-                />
+                /> */}
               </div>
               <div className="flex flex-col">
-                <span className="text-lg sm:text-xl md:text-2xl lg:text-2xl xl:text-3xl font-light tracking-tight text-gray-900 transition-colors duration-300 group-hover:text-gray-700">
+                <span className="text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl font-light tracking-tight text-gray-900 transition-colors duration-300 group-hover:text-gray-700">
                   ATELIER
                 </span>
-                <span className="text-sm sm:text-sm md:text-base lg:text-sm xl:text-base font-extralight tracking-widest text-gray-500 uppercase">
+                <span className="text-xs sm:text-xs md:text-sm lg:text-sm xl:text-base font-extralight tracking-widest text-gray-500 uppercase">
                   Collections
                 </span>
               </div>
@@ -83,15 +83,15 @@ export default function Navbar() {
               className="lg:hidden p-2 rounded-sm text-gray-800 hover:bg-gray-100/50 transition-all duration-300 group"
               aria-label="Toggle navigation menu"
             >
-              <div className="w-6 h-6 sm:w-7 sm:h-7 flex flex-col justify-center items-center">
-                <span className={`block w-5 sm:w-6 h-0.5 bg-gray-800 transition-all duration-300 ${
-                  isMobileMenuOpen ? 'rotate-45 translate-y-1.5' : ''
+              <div className="w-5 h-5 sm:w-6 sm:h-6 flex flex-col justify-center items-center">
+                <span className={`block w-4 sm:w-5 h-px bg-gray-800 transition-all duration-300 ${
+                  isMobileMenuOpen ? 'rotate-45 translate-y-1' : ''
                 }`}></span>
-                <span className={`block w-5 sm:w-6 h-0.5 bg-gray-800 my-1.5 transition-all duration-300 ${
+                <span className={`block w-4 sm:w-5 h-px bg-gray-800 my-1 transition-all duration-300 ${
                   isMobileMenuOpen ? 'opacity-0' : ''
                 }`}></span>
-                <span className={`block w-5 sm:w-6 h-0.5 bg-gray-800 transition-all duration-300 ${
-                  isMobileMenuOpen ? '-rotate-45 -translate-y-1.5' : ''
+                <span className={`block w-4 sm:w-5 h-px bg-gray-800 transition-all duration-300 ${
+                  isMobileMenuOpen ? '-rotate-45 -translate-y-1' : ''
                 }`}></span>
               </div>
             </button>
@@ -101,11 +101,11 @@ export default function Navbar() {
           <div className={`lg:hidden transition-all duration-700 ease-in-out overflow-hidden ${
             isMobileMenuOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
           }`}>
-            <div className="relative py-6 sm:py-8">
+            <div className="relative py-4 sm:py-6">
               {/* Elegant backdrop for mobile menu */}
               <div className="absolute inset-0 bg-gradient-to-b from-white/98 to-gray-50/95 backdrop-blur-xl border-t border-gray-200/30" />
               
-              <nav className="relative space-y-2 sm:space-y-3">
+              <nav className="relative space-y-1 sm:space-y-2">
                 {[
                   { name: 'Home', href: '#home' },
                   { name: 'Collection', href: '#collection' },
@@ -117,7 +117,7 @@ export default function Navbar() {
                     key={item.name}
                     href={item.href}
                     onClick={() => setIsMobileMenuOpen(false)}
-                    className="group block px-6 sm:px-8 py-4 sm:py-5 text-base sm:text-lg font-light tracking-wide text-gray-800 hover:text-gray-900 transition-all duration-300 relative"
+                    className="group block px-4 sm:px-6 py-3 sm:py-4 text-sm sm:text-base font-light tracking-wide text-gray-800 hover:text-gray-900 transition-all duration-300 relative"
                     style={{ animationDelay: `${index * 100}ms` }}
                   >
                     <span className="relative z-10">{item.name.toUpperCase()}</span>
@@ -128,11 +128,11 @@ export default function Navbar() {
                 ))}
                 
                 {/* Mobile CTA */}
-                <div className="px-6 sm:px-8 pt-6 sm:pt-8">
+                <div className="px-4 sm:px-6 pt-4 sm:pt-6">
                   <Link
                     href="#contact"
                     onClick={() => setIsMobileMenuOpen(false)}
-                    className="group relative overflow-hidden block w-full text-center border border-gray-900 px-6 py-4 sm:py-5 text-base sm:text-lg font-light tracking-widest text-gray-900 hover:text-white transition-all duration-500 ease-out"
+                    className="group relative overflow-hidden block w-full text-center border border-gray-900 px-4 py-3 sm:py-4 text-sm sm:text-base font-light tracking-widest text-gray-900 hover:text-white transition-all duration-500 ease-out"
                   >
                     <span className="relative z-10">INQUIRE NOW</span>
                     <div className="absolute inset-0 bg-gray-900 transform -translate-x-full group-hover:translate-x-0 transition-transform duration-500 ease-out"></div>
