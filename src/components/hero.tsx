@@ -49,7 +49,7 @@ export default function Hero() {
                 <p className="text-base sm:text-lg lg:text-xl text-gray-600 font-light leading-relaxed max-w-lg tracking-wide">
                   Where Indonesian heritage meets contemporary luxury. 
                   <span className="block mt-2 text-sm sm:text-base text-gray-500">
-                    Handcrafted excellence since 1960
+                    Made by NiMpo
                   </span>
                 </p>
               </div>

@@ -67,7 +67,7 @@ export default function Home() {
           <div className="text-center mb-12 sm:mb-16 lg:mb-20">
             <div className="space-y-4 sm:space-y-6">
               <h2 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-extralight text-gray-900 tracking-wider leading-tight">
-                NOUVELLE
+                ATELIER
                 <span className="block text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-light text-gray-600 mt-1 sm:mt-2">
                   COLLECTION
                 </span>
