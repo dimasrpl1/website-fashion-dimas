@@ -91,8 +91,6 @@ export default function Navbar() {
               {[
                 { name: 'Home', href: '/' },
                 { name: 'Collection', href: '/collection' },
-                { name: 'About', href: '#about' },
-                { name: 'Atelier', href: '#atelier' },
                 { name: 'Contact', href: '#contact' }
               ].map((item) => (
                 <Link
@@ -152,10 +150,8 @@ export default function Navbar() {
               
               <nav className="relative space-y-1 sm:space-y-2">
                 {[
-                  { name: 'Home', href: '#home' },
+                  { name: 'Home', href: '/' },
                   { name: 'Collection', href: '/collection' },
-                  { name: 'About', href: '#about' },
-                  { name: 'Atelier', href: '#atelier' },
                   { name: 'Contact', href: '#contact' }
                 ].map((item, index) => (
                   <Link
