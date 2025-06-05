@@ -1,18 +1,63 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 // import Image from 'next/image';
 import Link from 'next/link';
 
 export default function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
 
+  useEffect(() => {
+    const controlNavbar = () => {
+      const currentScrollY = window.scrollY;
+      const scrollDifference = Math.abs(currentScrollY - lastScrollY);
+      
+      // Jika scroll ke bawah dan sudah scroll lebih dari 10px, sembunyikan navbar
+      if (currentScrollY > lastScrollY && currentScrollY > 10) {
+        setIsVisible(false);
+      } 
+      // Jika scroll ke atas dengan jarak minimum 50px, tampilkan navbar
+      else if (currentScrollY < lastScrollY && scrollDifference > 50) {
+        setIsVisible(true);
+      }
+      
+      // Jika di bagian paling atas (scroll position 0), selalu tampilkan navbar
+      if (currentScrollY === 0) {
+        setIsVisible(true);
+      }
+
+      setLastScrollY(currentScrollY);
+    };
+
+    // Throttle scroll event untuk performa yang lebih baik
+    let ticking = false;
+    const handleScroll = () => {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          controlNavbar();
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [lastScrollY]);
+
   return (
-    <header className="fixed top-0 left-0 right-0 z-50">
+    <header className={`fixed top-0 left-0 right-0 z-50 transition-transform duration-300 ease-in-out ${
+      isVisible ? 'translate-y-0' : '-translate-y-full'
+    }`}>
       {/* Elegant backdrop with subtle gradient */}
       <div className="absolute inset-0 bg-gradient-to-b from-white/98 to-white/95 backdrop-blur-xl border-b border-gray-200/50" />
       
