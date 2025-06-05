@@ -6,6 +6,7 @@ import Navbar from "@/components/navbar";
 import Hero from "@/components/hero";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
+import Footer from "@/components/footer";
 
 type Product = {
   id: number;
@@ -62,22 +63,25 @@ export default function Home() {
         <Hero />
 
         {/* Koleksi Eksklusif Section - Luxury Fashion Style */}
-        <section className="w-full overflow-hidden px-4 sm:px-6 lg:px-8 xl:px-12 py-16 sm:py-20 lg:py-24 bg-transparent">
+        <section className="w-full overflow-hidden px-4 sm:px-6 lg:px-8 xl:px-12 pt-2 pb-6 bg-transparent">
+
+
           {/* Header Section - Minimalist & Elegant */}
-          <div className="text-center mb-12 sm:mb-16 lg:mb-20">
-            <div className="space-y-4 sm:space-y-6">
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-extralight text-gray-900 tracking-wider leading-tight">
-                ATELIER
-                <span className="block text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-light text-gray-600 mt-1 sm:mt-2">
-                  COLLECTION
-                </span>
-              </h2>
-              <div className="w-20 sm:w-28 lg:w-32 h-px bg-gradient-to-r from-transparent via-gray-800 to-transparent mx-auto"></div>
-              <p className="text-sm sm:text-base lg:text-lg text-gray-600 font-light tracking-wide max-w-2xl mx-auto px-4">
-                Discover our curated selection of timeless pieces
-              </p>
-            </div>
-          </div>
+<div className="text-center mb-12 sm:mb-16 lg:mb-20">
+  <div className="space-y-4 sm:space-y-6">
+    <h2 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-extralight text-gray-900 tracking-wider leading-tight">
+      NEW ARRIVALS
+      <span className="block text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-light text-gray-600 mt-1 sm:mt-2">
+        FROM OUR COLLECTION
+      </span>
+    </h2>
+    <div className="w-20 sm:w-28 lg:w-32 h-px bg-gradient-to-r from-transparent via-gray-800 to-transparent mx-auto"></div>
+    <p className="text-sm sm:text-base lg:text-lg text-gray-600 font-light tracking-wide max-w-2xl mx-auto px-4">
+      Explore the latest pieces crafted with elegance and sophistication.
+    </p>
+  </div>
+</div>
+
 
           {/* Products Grid/Slider */}
           <div className="w-full max-w-7xl mx-auto">
@@ -177,15 +181,248 @@ export default function Home() {
           </div>
 
           {/* View All Button - Luxury Style */}
-          <div className="text-center mt-12 sm:mt-16 lg:mt-20">
+          <div className="text-center mt-4 sm:mt-10 lg:mt-10">
             <button className="group relative overflow-hidden bg-transparent border border-gray-900 px-8 sm:px-12 lg:px-16 py-3 sm:py-4 font-light text-sm sm:text-base tracking-[0.2em] text-gray-900 hover:text-white transition-all duration-500 ease-out">
               <span className="relative z-10">EXPLORE COLLECTION</span>
               <div className="absolute inset-0 bg-gray-900 transform -translate-x-full group-hover:translate-x-0 transition-transform duration-500 ease-out"></div>
             </button>
           </div>
+</section>
+
+        {/* Category Banners Section - Compact Luxury Layout */}
+        <section className="w-full px-4 sm:px-6 lg:px-8 xl:px-12 pt-6 sm:pt-8 lg:pt-10 pb-6 sm:pb-8 lg:pb-10 bg-transparent">
+          <div className="max-w-6xl mx-auto">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 sm:gap-4 lg:gap-6">
+              
+              {/* Kategori Baju Banner */}
+              <div className="group relative overflow-hidden bg-gray-100 cursor-pointer" style={{ aspectRatio: '5/3' }}>
+                {/* Background Image */}
+                <div className="absolute inset-0 bg-gradient-to-br from-slate-600 via-gray-700 to-stone-800">
+                  {/* Placeholder untuk gambar baju - ganti dengan URL gambar yang sesuai */}
+                  <img
+                    src="/image/image3.jpg"
+                    alt="Kategori Baju"
+                    className="w-full h-full object-cover opacity-90 group-hover:scale-105 transition-transform duration-700 ease-out"
+                  />
+                </div>
+                
+                {/* Overlay */}
+                <div className="absolute inset-0 bg-black/30 group-hover:bg-black/40 transition-all duration-500"></div>
+                
+                {/* Content */}
+                <div className="absolute inset-0 flex flex-col justify-end p-4 sm:p-6 lg:p-8 z-10">
+                  <div className="space-y-3 sm:space-y-4">
+                    <div className="space-y-1 sm:space-y-2">
+                      <h3 className="text-xl sm:text-2xl lg:text-3xl font-extralight text-white tracking-wider leading-tight">
+                        SHIRTS
+                      </h3>
+                      <div className="w-8 sm:w-12 h-px bg-white/60"></div>
+                      <p className="text-xs sm:text-sm text-white/90 font-light tracking-wide">
+                        Premium collection
+                      </p>
+                    </div>
+                    
+                    <button className="group/btn relative overflow-hidden bg-transparent border border-white/80 px-4 sm:px-6 py-2 sm:py-2.5 font-light text-xs tracking-[0.2em] text-white hover:text-gray-900 transition-all duration-500 ease-out w-fit">
+                      <span className="relative z-10">SHOP SHIRTS</span>
+                      <div className="absolute inset-0 bg-white transform -translate-x-full group-hover/btn:translate-x-0 transition-transform duration-500 ease-out"></div>
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              {/* Kategori Celana Banner */}
+              <div className="group relative overflow-hidden bg-gray-100 cursor-pointer" style={{ aspectRatio: '5/3' }}>
+                {/* Background Image */}
+                <div className="absolute inset-0 bg-gradient-to-br from-stone-600 via-gray-600 to-slate-700">
+                  {/* Placeholder untuk gambar celana - ganti dengan URL gambar yang sesuai */}
+                  <img
+                    src="/image/celana1.jpg"
+                    alt="Kategori Celana"
+                    className="w-full h-full object-cover opacity-90 group-hover:scale-105 transition-transform duration-700 ease-out"
+                  />
+                </div>
+                
+                {/* Overlay */}
+                <div className="absolute inset-0 bg-black/30 group-hover:bg-black/40 transition-all duration-500"></div>
+                
+                {/* Content */}
+                <div className="absolute inset-0 flex flex-col justify-end p-4 sm:p-6 lg:p-8 z-10">
+                  <div className="space-y-3 sm:space-y-4">
+                    <div className="space-y-1 sm:space-y-2">
+                      <h3 className="text-xl sm:text-2xl lg:text-3xl font-extralight text-white tracking-wider leading-tight">
+                        PANTS
+                      </h3>
+                      <div className="w-8 sm:w-12 h-px bg-white/60"></div>
+                      <p className="text-xs sm:text-sm text-white/90 font-light tracking-wide">
+                        Tailored selection
+                      </p>
+                    </div>
+                    
+                    <button className="group/btn relative overflow-hidden bg-transparent border border-white/80 px-4 sm:px-6 py-2 sm:py-2.5 font-light text-xs tracking-[0.2em] text-white hover:text-gray-900 transition-all duration-500 ease-out w-fit">
+                      <span className="relative z-10">SHOP PANTS</span>
+                      <div className="absolute inset-0 bg-white transform -translate-x-full group-hover/btn:translate-x-0 transition-transform duration-500 ease-out"></div>
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
         </section>
 
+        {/* Model Gallery Section - Fashion Editorial Style */}
+        <section className="w-full px-4 sm:px-6 lg:px-8 xl:px-12 pt-6 sm:pt-8 lg:pt-12 pb-8 sm:pb-12 lg:pb-16 bg-transparent">
+          <div className="max-w-7xl mx-auto">
+            
+            {/* Header */}
+            <div className="text-center mb-8 sm:mb-12 lg:mb-16">
+              <div className="space-y-3 sm:space-y-4">
+                <h2 className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-extralight text-gray-900 tracking-wider leading-tight">
+                  STYLED BY
+                  <span className="block text-xl sm:text-2xl lg:text-3xl xl:text-4xl font-light text-gray-600 mt-1">
+                    OUR COMMUNITY
+                  </span>
+                </h2>
+                <div className="w-16 sm:w-24 lg:w-28 h-px bg-gradient-to-r from-transparent via-gray-800 to-transparent mx-auto"></div>
+                <p className="text-sm sm:text-base text-gray-600 font-light tracking-wide max-w-xl mx-auto">
+                  See how our pieces come to life through the lens of style
+                </p>
+              </div>
+            </div>
+
+            {/* Gallery Grid */}
+            <div className="space-y-3 sm:space-y-4 lg:space-y-6">
+              
+              {/* Top Row - 2 Horizontal Images */}
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 sm:gap-4 lg:gap-6">
+                
+                {/* First Horizontal Image */}
+                <div className="group relative overflow-hidden bg-gray-100 cursor-pointer" style={{ aspectRatio: '4/3' }}>
+                  <img
+                    src="/image/horizontal2.jpg"
+                    alt="Model wearing our collection"
+                    className="w-full h-full object-cover transition-all duration-700 ease-out group-hover:scale-105"
+                    loading="lazy"
+                  />
+                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-all duration-500"></div>
+                  
+                  {/* Overlay content */}
+                  <div className="absolute inset-0 flex items-end justify-start p-4 sm:p-6 opacity-0 group-hover:opacity-100 transition-all duration-500">
+                    <div className="bg-white/90 backdrop-blur-sm px-3 sm:px-4 py-2 sm:py-2.5">
+                      <p className="text-xs sm:text-sm font-light text-gray-900 tracking-wide">
+                        @MODEL_01
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Second Horizontal Image */}
+                <div className="group relative overflow-hidden bg-gray-100 cursor-pointer" style={{ aspectRatio: '4/3' }}>
+                  <img
+                    src="/image/horizontal1.jpg"
+                    alt="Model wearing our collection"
+                    className="w-full h-full object-cover transition-all duration-700 ease-out group-hover:scale-105"
+                    loading="lazy"
+                  />
+                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-all duration-500"></div>
+                  
+                  {/* Overlay content */}
+                  <div className="absolute inset-0 flex items-end justify-start p-4 sm:p-6 opacity-0 group-hover:opacity-100 transition-all duration-500">
+                    <div className="bg-white/90 backdrop-blur-sm px-3 sm:px-4 py-2 sm:py-2.5">
+                      <p className="text-xs sm:text-sm font-light text-gray-900 tracking-wide">
+                        @MODEL_02
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+
+              {/* Bottom Row - 3 Vertical Images */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 lg:gap-6">
+                
+                {/* First Vertical Image */}
+                <div className="group relative overflow-hidden bg-gray-100 cursor-pointer" style={{ aspectRatio: '3/4' }}>
+                  <img
+                    src="/image/vertikal1.jpg"
+                    alt="Model wearing our collection"
+                    className="w-full h-full object-cover transition-all duration-700 ease-out group-hover:scale-105"
+                    loading="lazy"
+                  />
+                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-all duration-500"></div>
+                  
+                  {/* Overlay content */}
+                  <div className="absolute inset-0 flex items-end justify-start p-4 sm:p-5 opacity-0 group-hover:opacity-100 transition-all duration-500">
+                    <div className="bg-white/90 backdrop-blur-sm px-3 sm:px-4 py-2 sm:py-2.5">
+                      <p className="text-xs sm:text-sm font-light text-gray-900 tracking-wide">
+                        @MODEL_03
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Second Vertical Image */}
+                <div className="group relative overflow-hidden bg-gray-100 cursor-pointer" style={{ aspectRatio: '3/4' }}>
+                  <img
+                    src="/image/vertikal2.jpg"
+                    alt="Model wearing our collection"
+                    className="w-full h-full object-cover transition-all duration-700 ease-out group-hover:scale-105"
+                    loading="lazy"
+                  />
+                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-all duration-500"></div>
+                  
+                  {/* Overlay content */}
+                  <div className="absolute inset-0 flex items-end justify-start p-4 sm:p-5 opacity-0 group-hover:opacity-100 transition-all duration-500">
+                    <div className="bg-white/90 backdrop-blur-sm px-3 sm:px-4 py-2 sm:py-2.5">
+                      <p className="text-xs sm:text-sm font-light text-gray-900 tracking-wide">
+                        @MODEL_04
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Third Vertical Image */}
+                <div className="group relative overflow-hidden bg-gray-100 cursor-pointer sm:col-span-2 lg:col-span-1" style={{ aspectRatio: '3/4' }}>
+                  <img
+                    src="/image/vertikal3.jpg"
+                    alt="Model wearing our collection"
+                    className="w-full h-full object-cover transition-all duration-700 ease-out group-hover:scale-105"
+                    loading="lazy"
+                  />
+                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-all duration-500"></div>
+                  
+                  {/* Overlay content */}
+                  <div className="absolute inset-0 flex items-end justify-start p-4 sm:p-5 opacity-0 group-hover:opacity-100 transition-all duration-500">
+                    <div className="bg-white/90 backdrop-blur-sm px-3 sm:px-4 py-2 sm:py-2.5">
+                      <p className="text-xs sm:text-sm font-light text-gray-900 tracking-wide">
+                        @MODEL_05
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+            {/* CTA Section */}
+            <div className="text-center mt-8 sm:mt-12 lg:mt-16">
+              <div className="space-y-4 sm:space-y-6">
+                <p className="text-sm sm:text-base text-gray-600 font-light tracking-wide max-w-md mx-auto">
+                  Tag us in your photos for a chance to be featured
+                </p>
+                <button className="group relative overflow-hidden bg-transparent border border-gray-900 px-6 sm:px-10 lg:px-12 py-2.5 sm:py-3 font-light text-sm tracking-[0.2em] text-gray-900 hover:text-white transition-all duration-500 ease-out">
+                  <span className="relative z-10">#WEARYOURSTYLE</span>
+                  <div className="absolute inset-0 bg-gray-900 transform -translate-x-full group-hover:translate-x-0 transition-transform duration-500 ease-out"></div>
+                </button>
+              </div>
+            </div>
+
+          </div>
+        </section>
       </div>
+      
+      {/* Tambahkan Footer di sini */}
+      <Footer />
     </div>
   );
 }
