@@ -182,8 +182,11 @@ export default function Home() {
 
           {/* View All Button - Luxury Style */}
           <div className="text-center mt-4 sm:mt-10 lg:mt-10">
-            <button className="group relative overflow-hidden bg-transparent border border-gray-900 px-8 sm:px-12 lg:px-16 py-3 sm:py-4 font-light text-sm sm:text-base tracking-[0.2em] text-gray-900 hover:text-white transition-all duration-500 ease-out">
-              <span className="relative z-10">EXPLORE COLLECTION</span>
+            <button className="group relative overflow-hidden bg-transparent border border-gray-900 px-8 sm:px-12 lg:px-16 py-3 sm:py-4 font-light text-sm sm:text-base tracking-[0.2em] text-gray-900 hover:text-white transition-all duration-500 ease-out" onClick={(e) => {
+                        e.stopPropagation();
+                        window.location.href = '/collection';
+                      }}>
+              <span className="relative z-10">SHOP NOW</span>
               <div className="absolute inset-0 bg-gray-900 transform -translate-x-full group-hover:translate-x-0 transition-transform duration-500 ease-out"></div>
             </button>
           </div>
@@ -195,7 +198,11 @@ export default function Home() {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 sm:gap-4 lg:gap-6">
               
               {/* Kategori Baju Banner */}
-              <div className="group relative overflow-hidden bg-gray-100 cursor-pointer" style={{ aspectRatio: '5/3' }}>
+              <div 
+                className="group relative overflow-hidden bg-gray-100 cursor-pointer" 
+                style={{ aspectRatio: '5/3' }}
+                onClick={() => window.location.href = '/collection/baju'}
+              >
                 {/* Background Image */}
                 <div className="absolute inset-0 bg-gradient-to-br from-slate-600 via-gray-700 to-stone-800">
                   {/* Placeholder untuk gambar baju - ganti dengan URL gambar yang sesuai */}
@@ -222,7 +229,13 @@ export default function Home() {
                       </p>
                     </div>
                     
-                    <button className="group/btn relative overflow-hidden bg-transparent border border-white/80 px-4 sm:px-6 py-2 sm:py-2.5 font-light text-xs tracking-[0.2em] text-white hover:text-gray-900 transition-all duration-500 ease-out w-fit">
+                    <button 
+                      className="group/btn relative overflow-hidden bg-transparent border border-white/80 px-4 sm:px-6 py-2 sm:py-2.5 font-light text-xs tracking-[0.2em] text-white hover:text-gray-900 transition-all duration-500 ease-out w-fit"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        window.location.href = '/collection/baju';
+                      }}
+                    >
                       <span className="relative z-10">SHOP SHIRTS</span>
                       <div className="absolute inset-0 bg-white transform -translate-x-full group-hover/btn:translate-x-0 transition-transform duration-500 ease-out"></div>
                     </button>
@@ -231,7 +244,11 @@ export default function Home() {
               </div>
 
               {/* Kategori Celana Banner */}
-              <div className="group relative overflow-hidden bg-gray-100 cursor-pointer" style={{ aspectRatio: '5/3' }}>
+              <div 
+                className="group relative overflow-hidden bg-gray-100 cursor-pointer" 
+                style={{ aspectRatio: '5/3' }}
+                onClick={() => window.location.href = '/collection/celana'}
+              >
                 {/* Background Image */}
                 <div className="absolute inset-0 bg-gradient-to-br from-stone-600 via-gray-600 to-slate-700">
                   {/* Placeholder untuk gambar celana - ganti dengan URL gambar yang sesuai */}
@@ -258,7 +275,13 @@ export default function Home() {
                       </p>
                     </div>
                     
-                    <button className="group/btn relative overflow-hidden bg-transparent border border-white/80 px-4 sm:px-6 py-2 sm:py-2.5 font-light text-xs tracking-[0.2em] text-white hover:text-gray-900 transition-all duration-500 ease-out w-fit">
+                    <button 
+                      className="group/btn relative overflow-hidden bg-transparent border border-white/80 px-4 sm:px-6 py-2 sm:py-2.5 font-light text-xs tracking-[0.2em] text-white hover:text-gray-900 transition-all duration-500 ease-out w-fit"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        window.location.href = '/collection/celana';
+                      }}
+                    >
                       <span className="relative z-10">SHOP PANTS</span>
                       <div className="absolute inset-0 bg-white transform -translate-x-full group-hover/btn:translate-x-0 transition-transform duration-500 ease-out"></div>
                     </button>

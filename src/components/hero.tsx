@@ -83,7 +83,7 @@ export default function Hero() {
                 {/* CTA Buttons */}
                 <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 pt-4 sm:pt-6 opacity-0 animate-fade-in-up" style={{animationDelay: '1.8s', animationFillMode: 'forwards'}}>
                   <a
-                    href="#collection"
+                    href="/collection"
                     className="group relative inline-flex items-center justify-center px-8 sm:px-10 lg:px-12 xl:px-14 py-4 sm:py-5 text-sm sm:text-base lg:text-lg font-light tracking-[0.15em] text-white bg-stone-900 hover:bg-stone-800 transition-all duration-500 ease-out overflow-hidden transform hover:scale-[1.02] active:scale-[0.98] shadow-lg hover:shadow-xl"
                   >
                     <span className="relative z-10 flex items-center">
@@ -95,13 +95,6 @@ export default function Hero() {
                     <div className="absolute inset-0 bg-gradient-to-r from-stone-800 via-stone-700 to-stone-900 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"></div>
                   </a>
 
-                  <a
-                    href="#heritage"
-                    className="group relative inline-flex items-center justify-center px-8 sm:px-10 lg:px-12 xl:px-14 py-4 sm:py-5 text-sm sm:text-base lg:text-lg font-light tracking-[0.15em] text-stone-900 bg-transparent border border-stone-300 hover:border-stone-900 transition-all duration-500 ease-out overflow-hidden transform hover:scale-[1.02] active:scale-[0.98]"
-                  >
-                    <span className="relative z-10 group-hover:text-white transition-colors duration-500">DISCOVER HERITAGE</span>
-                    <div className="absolute inset-0 bg-stone-900 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"></div>
-                  </a>
                 </div>
 
 

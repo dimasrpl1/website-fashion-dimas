@@ -89,8 +89,8 @@ export default function Navbar() {
             {/* Desktop Navigation - Minimalist */}
             <nav className="hidden lg:flex items-center gap-6 xl:gap-8 2xl:gap-10">
               {[
-                { name: 'Home', href: '#home' },
-                { name: 'Collection', href: '#collection' },
+                { name: 'Home', href: '/' },
+                { name: 'Collection', href: '/collection' },
                 { name: 'About', href: '#about' },
                 { name: 'Atelier', href: '#atelier' },
                 { name: 'Contact', href: '#contact' }
@@ -153,7 +153,7 @@ export default function Navbar() {
               <nav className="relative space-y-1 sm:space-y-2">
                 {[
                   { name: 'Home', href: '#home' },
-                  { name: 'Collection', href: '#collection' },
+                  { name: 'Collection', href: '/collection' },
                   { name: 'About', href: '#about' },
                   { name: 'Atelier', href: '#atelier' },
                   { name: 'Contact', href: '#contact' }
