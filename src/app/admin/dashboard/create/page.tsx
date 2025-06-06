@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { supabase } from '@/lib/supabase'
 import { v4 as uuidv4 } from 'uuid'
-import { ArrowLeft, Upload, X, Image as ImageIcon, Package, Tag, DollarSign, FileText, Save, AlertCircle } from 'lucide-react'
+import { ArrowLeft, Upload, X, Image as ImageIcon, Package, Tag, DollarSign, FileText, Save, AlertCircle, ToggleLeft, ToggleRight } from 'lucide-react'
 
 export default function CreateProdukPage() {
   const router = useRouter()
@@ -12,6 +12,7 @@ export default function CreateProdukPage() {
   const [deskripsi, setDeskripsi] = useState('')
   const [harga, setHarga] = useState('')
   const [kategori, setKategori] = useState('')
+  const [status, setStatus] = useState(true) // true = tersedia, false = terjual
   const [gambarFiles, setGambarFiles] = useState<File[]>([])
   const [isLoading, setIsLoading] = useState(false)
   const [errorMsg, setErrorMsg] = useState('')
@@ -70,6 +71,7 @@ export default function CreateProdukPage() {
         deskripsi,
         harga: parseInt(harga),
         kategori,
+        status,
         created_at: new Date().toISOString()
       })
 
@@ -174,8 +176,8 @@ export default function CreateProdukPage() {
                 />
               </div>
 
-              {/* Grid untuk Harga dan Kategori */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+              {/* Grid untuk Harga, Kategori, dan Status */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
                 {/* Harga */}
                 <div className="space-y-2">
                   <label className="flex items-center gap-2 text-sm sm:text-base font-semibold text-gray-900">
@@ -208,6 +210,38 @@ export default function CreateProdukPage() {
                     <option value="Baju">Baju</option>
                     <option value="Celana">Celana</option>
                   </select>
+                </div>
+
+                {/* Status */}
+                <div className="space-y-2">
+                  <label className="flex items-center gap-2 text-sm sm:text-base font-semibold text-gray-900">
+                    {status ? (
+                      <ToggleRight size={18} className="text-green-600" />
+                    ) : (
+                      <ToggleLeft size={18} className="text-red-600" />
+                    )}
+                    Status Produk
+                  </label>
+                  <div className="flex items-center gap-3 p-3 sm:p-4 border-2 border-gray-200 rounded-xl bg-gray-50">
+                    <button
+                      type="button"
+                      onClick={() => setStatus(!status)}
+                      className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors duration-200 ${
+                        status ? 'bg-green-500' : 'bg-red-500'
+                      }`}
+                    >
+                      <span
+                        className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform duration-200 ${
+                          status ? 'translate-x-6' : 'translate-x-1'
+                        }`}
+                      />
+                    </button>
+                    <span className={`text-sm sm:text-base font-medium ${
+                      status ? 'text-green-700' : 'text-red-700'
+                    }`}>
+                      {status ? 'Tersedia' : 'Terjual'}
+                    </span>
+                  </div>
                 </div>
               </div>
 

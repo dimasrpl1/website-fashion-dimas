@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { supabase } from '@/lib/supabase'
 import { Button } from '../../../components/ui/button'
-import { PencilIcon, PlusIcon, ChevronLeft, ChevronRight, LogOut, Package } from 'lucide-react'
+import { PencilIcon, PlusIcon, ChevronLeft, ChevronRight, LogOut, Package, CheckCircle, XCircle } from 'lucide-react'
 // import Image from 'next/image'
 
 interface Produk {
@@ -13,6 +13,7 @@ interface Produk {
   deskripsi: string
   harga: number
   kategori: string
+  status: boolean // true = tersedia, false = terjual
   // gambar akan kita ambil terpisah
 }
 
@@ -26,11 +27,14 @@ export default function AdminDashboardPage() {
   const router = useRouter()
   const [produkList, setProdukList] = useState<(Produk & { gambar: ProdukGambar[] })[]>([])
   const [isLoading, setIsLoading] = useState(true)
+  const [updatingStatus, setUpdatingStatus] = useState<{ [produkId: string]: boolean }>({})
   // State untuk menyimpan index gambar aktif per produk
   const [activeImageIndex, setActiveImageIndex] = useState<{ [produkId: string]: number }>({})
   // State untuk touch gestures
   const [touchStart, setTouchStart] = useState<{ [produkId: string]: number }>({})
   const [touchEnd, setTouchEnd] = useState<{ [produkId: string]: number }>({})
+  // State loading hapus
+  const [deleting, setDeleting] = useState<{ [produkId: string]: boolean }>({})
 
   useEffect(() => {
     const isAdmin = sessionStorage.getItem('isAdmin')
@@ -78,6 +82,32 @@ export default function AdminDashboardPage() {
     router.push('/admin')
   }
 
+  // Fungsi untuk toggle status produk
+  const toggleStatus = async (produkId: string, currentStatus: boolean) => {
+    setUpdatingStatus(prev => ({ ...prev, [produkId]: true }))
+    
+    try {
+      const { error } = await supabase
+        .from('produk')
+        .update({ status: !currentStatus })
+        .eq('id', produkId)
+
+      if (error) throw error
+
+      // Update state lokal
+      setProdukList(prev => prev.map(produk => 
+        produk.id === produkId 
+          ? { ...produk, status: !currentStatus }
+          : produk
+      ))
+    } catch (error) {
+      console.error('Gagal mengubah status produk:', error)
+      alert('Gagal mengubah status produk')
+    } finally {
+      setUpdatingStatus(prev => ({ ...prev, [produkId]: false }))
+    }
+  }
+
   // Fungsi untuk pindah gambar ke kiri / kanan
   const changeImageIndex = (produkId: string, direction: 'prev' | 'next') => {
     setActiveImageIndex((prev) => {
@@ -120,6 +150,39 @@ export default function AdminDashboardPage() {
     }
   }
 
+  // Hitung statistik produk
+  const produkTersedia = produkList.filter(p => p.status === true).length
+  const produkTerjual = produkList.filter(p => p.status === false).length
+
+  // Fungsi hapus produk & gambar
+  const handleDeleteProduk = async (produkId: string, gambar: ProdukGambar[]) => {
+    if (!confirm('Yakin ingin menghapus produk ini beserta semua gambarnya?')) return
+    setDeleting(prev => ({ ...prev, [produkId]: true }))
+    try {
+      // 1. Hapus gambar dari storage
+      for (const g of gambar) {
+        // Asumsi url gambar: https://xxxx.supabase.co/storage/v1/object/public/product-images/nama-file.jpg
+        // Ambil path setelah .../product-images/
+        const url = new URL(g.url)
+        const path = decodeURIComponent(url.pathname.split('/product-images/')[1])
+        if (path) {
+          await supabase.storage.from('product-images').remove([path])
+        }
+      }
+      // 2. Hapus data gambar dari tabel produk_gambar
+      await supabase.from('produk_gambar').delete().eq('produk_id', produkId)
+      // 3. Hapus data produk dari tabel produk
+      await supabase.from('produk').delete().eq('id', produkId)
+      // 4. Update state
+      setProdukList(prev => prev.filter(p => p.id !== produkId))
+    } catch (error) {
+      alert('Gagal menghapus produk')
+      console.error(error)
+    } finally {
+      setDeleting(prev => ({ ...prev, [produkId]: false }))
+    }
+  }
+
   if (isLoading) {
     return (
       <div className="min-h-screen bg-white flex items-center justify-center">
@@ -140,8 +203,6 @@ export default function AdminDashboardPage() {
             {/* Logo dan Judul */}
             <div className="flex items-center gap-3 sm:gap-4 flex-1">
               <div className="relative w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 flex-shrink-0">
-
-
                 {/* <Image
                   src="/image/logo.png"
                   alt="Diyaning Kebaya Logo"
@@ -188,11 +249,34 @@ export default function AdminDashboardPage() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
         {/* Stats */}
         <div className="mb-6 sm:mb-8">
-          <div className="flex items-center gap-2 mb-2">
-            <Package className="w-4 h-4 sm:w-5 sm:h-5 text-gray-700" />
-            <span className="text-sm font-medium text-gray-700">Total Produk</span>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-4">
+            {/* Total Produk */}
+            <div className="bg-gray-50 rounded-xl p-4">
+              <div className="flex items-center gap-2 mb-2">
+                <Package className="w-4 h-4 sm:w-5 sm:h-5 text-gray-700" />
+                <span className="text-sm font-medium text-gray-700">Total Produk</span>
+              </div>
+              <p className="text-2xl sm:text-3xl font-bold text-gray-900">{produkList.length}</p>
+            </div>
+
+            {/* Produk Tersedia */}
+            <div className="bg-green-50 rounded-xl p-4">
+              <div className="flex items-center gap-2 mb-2">
+                <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-green-600" />
+                <span className="text-sm font-medium text-green-700">Tersedia</span>
+              </div>
+              <p className="text-2xl sm:text-3xl font-bold text-green-900">{produkTersedia}</p>
+            </div>
+
+            {/* Produk Terjual */}
+            <div className="bg-red-50 rounded-xl p-4">
+              <div className="flex items-center gap-2 mb-2">
+                <XCircle className="w-4 h-4 sm:w-5 sm:h-5 text-red-600" />
+                <span className="text-sm font-medium text-red-700">Terjual</span>
+              </div>
+              <p className="text-2xl sm:text-3xl font-bold text-red-900">{produkTerjual}</p>
+            </div>
           </div>
-          <p className="text-2xl sm:text-3xl font-bold text-gray-900">{produkList.length}</p>
         </div>
 
         {produkList.length === 0 ? (
@@ -230,10 +314,32 @@ export default function AdminDashboardPage() {
                         <img
                           src={gambarAktif.url}
                           alt={`${produk.nama} - gambar ${gambarAktifIndex + 1}`}
-                          className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                          className={`w-full h-full object-cover transition-all duration-300 group-hover:scale-105 ${
+                            !produk.status ? 'grayscale opacity-60' : ''
+                          }`}
                           draggable={false}
                           loading="lazy"
                         />
+
+                        {/* Status Badge */}
+                        <div className="absolute top-3 left-3">
+                          <span className={`px-2 py-1 text-xs font-medium rounded-full ${
+                            produk.status 
+                              ? 'bg-green-100 text-green-800 border border-green-200' 
+                              : 'bg-red-100 text-red-800 border border-red-200'
+                          }`}>
+                            {produk.status ? 'Tersedia' : 'Terjual'}
+                          </span>
+                        </div>
+
+                        {/* Overlay untuk produk terjual */}
+                        {!produk.status && (
+                          <div className="absolute inset-0 bg-black bg-opacity-20 flex items-center justify-center">
+                            <div className="bg-white bg-opacity-90 px-3 py-1 rounded-full">
+                              <span className="text-sm font-semibold text-gray-800">TERJUAL</span>
+                            </div>
+                          </div>
+                        )}
 
                         {/* Navigation Buttons - Only show on hover and hidden on mobile */}
                         {produk.gambar.length > 1 && (
@@ -285,7 +391,7 @@ export default function AdminDashboardPage() {
                       <p className="text-xs sm:text-sm text-gray-500 line-clamp-2 leading-relaxed">{produk.deskripsi}</p>
                     </div>
                     
-                    <div className="flex items-center justify-between">
+                    <div className="flex items-center justify-between mb-3">
                       <div>
                         <p className="text-base sm:text-lg font-bold text-gray-900">Rp {produk.harga.toLocaleString()}</p>
                         {produk.kategori && (
@@ -294,14 +400,64 @@ export default function AdminDashboardPage() {
                           </span>
                         )}
                       </div>
-                      
+                    </div>
+
+                    {/* Action Buttons */}
+                    <div className="flex gap-2">
+                      {/* Toggle Status Button */}
+                      <Button
+                        onClick={() => toggleStatus(produk.id, produk.status)}
+                        disabled={updatingStatus[produk.id]}
+                        className={`flex-1 px-3 py-2 rounded-lg transition-colors duration-200 flex items-center justify-center gap-1 text-sm font-medium ${
+                          produk.status
+                            ? 'bg-red-100 hover:bg-red-200 text-red-700 border border-red-200'
+                            : 'bg-green-100 hover:bg-green-200 text-green-700 border border-green-200'
+                        }`}
+                      >
+                        {updatingStatus[produk.id] ? (
+                          <div className="w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin" />
+                        ) : (
+                          <>
+                            {produk.status ? (
+                              <>
+                                <XCircle size={14} />
+                                <span className="hidden sm:inline">Tandai Terjual</span>
+                                <span className="sm:hidden">Terjual</span>
+                              </>
+                            ) : (
+                              <>
+                                <CheckCircle size={14} />
+                                <span className="hidden sm:inline">Tandai Tersedia</span>
+                                <span className="sm:hidden">Tersedia</span>
+                              </>
+                            )}
+                          </>
+                        )}
+                      </Button>
+
+                      {/* Edit Button */}
                       <Button
                         onClick={() => router.push(`/admin/dashboard/edit/${produk.id}`)}
-                        className="bg-gray-900 hover:bg-gray-800 text-white px-3 sm:px-4 py-2 rounded-lg transition-colors duration-200 flex items-center gap-1 sm:gap-2 text-sm"
+                        className="bg-gray-900 hover:bg-gray-800 text-white px-3 py-2 rounded-lg transition-colors duration-200 flex items-center gap-1 text-sm"
                       >
                         <PencilIcon size={12} className="sm:w-4 sm:h-4" />
                         <span className="hidden sm:inline">Edit</span>
-                        <span className="sm:hidden">Edit</span>
+                      </Button>
+
+                      {/* Delete Button */}
+                      <Button
+                        onClick={() => handleDeleteProduk(produk.id, produk.gambar)}
+                        disabled={deleting[produk.id]}
+                        className="bg-red-600 hover:bg-red-700 text-white px-3 py-2 rounded-lg transition-colors duration-200 flex items-center gap-1 text-sm"
+                      >
+                        {deleting[produk.id] ? (
+                          <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                        ) : (
+                          <>
+                            <XCircle size={14} />
+                            <span className="hidden sm:inline">Hapus</span>
+                          </>
+                        )}
                       </Button>
                     </div>
                   </div>

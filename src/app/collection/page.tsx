@@ -11,6 +11,7 @@ type Product = {
   nama: string;
   harga: number;
   gambar: string | null;
+  status: boolean;
 };
 
 export default function CollectionPage() {
@@ -35,6 +36,7 @@ export default function CollectionPage() {
           id,
           nama,
           harga,
+          status,
           produk_gambar (
             url
           )
@@ -53,6 +55,7 @@ export default function CollectionPage() {
         nama: item.nama,
         harga: item.harga,
         gambar: item.produk_gambar?.[0]?.url ?? null,
+        status: item.status,
       }));
 
       setProducts(formatted);
@@ -300,33 +303,70 @@ export default function CollectionPage() {
                   ? 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-4' 
                   : 'grid-cols-2 sm:grid-cols-2 lg:grid-cols-4'
               }`}>
-                {currentProducts.map((product, index) => (
-                  <div
-                    key={product.id}
-                    className="group relative bg-white rounded-sm overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 border border-gray-100"
-                    style={{ animationDelay: `${index * 100}ms` }}
-                  >
-                    <div className="relative w-full h-80 sm:h-96 lg:h-[400px] xl:h-[450px] overflow-hidden">
-                      <img
-                        src={product.gambar || "/default-image.png"}
-                        alt={product.nama}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                      />
-                      <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-all duration-300"></div>
-                    </div>
-                    <div className="p-3 sm:p-4">
-                      <h3 className="font-light tracking-wide text-gray-900 mb-1 group-hover:text-gray-700 transition-colors text-xs sm:text-sm truncate">
-                        {product.nama}
-                      </h3>
-                      <p className="font-light text-gray-600 text-xs sm:text-sm">
-                        Rp {product.harga.toLocaleString("id-ID")}
-                      </p>
-                    </div>
-                    
-                    {/* Hover overlay */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                  </div>
-                ))}
+                {currentProducts.map((product, index) => {
+  const CardContent = (
+    <div
+      className="group relative bg-white rounded-sm overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 border border-gray-100"
+      style={{ animationDelay: `${index * 100}ms` }}
+    >
+      <div className="relative w-full h-80 sm:h-96 lg:h-[400px] xl:h-[450px] overflow-hidden">
+        <img
+          src={product.gambar || "/default-image.png"}
+          alt={product.nama}
+          className={`w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ${
+            !product.status ? 'filter blur-sm grayscale' : ''
+          }`}
+        />
+
+        {/* Sold Out Overlay */}
+        {!product.status && (
+          <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
+            <div className="bg-red-600/90 backdrop-blur-sm px-6 py-3 rounded-sm border border-red-500/50">
+              <span className="text-white font-light tracking-[0.2em] text-sm sm:text-base uppercase">
+                SOLD
+              </span>
+            </div>
+          </div>
+        )}
+
+        {/* Hover overlay for available product */}
+        {product.status && (
+          <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-all duration-300"></div>
+        )}
+      </div>
+
+      <div className="p-3 sm:p-4">
+        <h3 className={`font-light tracking-wide mb-1 transition-colors text-xs sm:text-sm truncate ${
+          product.status 
+            ? 'text-gray-900 group-hover:text-gray-700' 
+            : 'text-gray-500'
+        }`}>
+          {product.nama}
+        </h3>
+        <p className={`font-light text-xs sm:text-sm ${
+          product.status ? 'text-gray-600' : 'text-gray-400'
+        }`}>
+          Rp {product.harga.toLocaleString("id-ID")}
+        </p>
+      </div>
+
+      {product.status && (
+        <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+      )}
+    </div>
+  );
+
+  return product.status ? (
+    <a href={`/collection/produk/${product.id}`} key={product.id} className="cursor-pointer">
+      {CardContent}
+    </a>
+  ) : (
+    <div key={product.id} className="cursor-not-allowed">
+      {CardContent}
+    </div>
+  );
+})}
+
               </div>
             )}
 

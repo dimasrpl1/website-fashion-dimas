@@ -3,7 +3,7 @@
 import { useEffect, useState, useCallback } from 'react'
 import { useParams, useRouter } from 'next/navigation'
 import { supabase } from '@/lib/supabase'
-import { ArrowLeft, Upload, X, Image as ImageIcon, Package, Tag, DollarSign, FileText, Save, AlertCircle, Trash2 } from 'lucide-react'
+import { ArrowLeft, Upload, X, Image as ImageIcon, Package, Tag, DollarSign, FileText, Save, AlertCircle, Trash2, ToggleLeft, ToggleRight } from 'lucide-react'
 
 interface Produk {
   id: string
@@ -11,12 +11,14 @@ interface Produk {
   deskripsi: string
   harga: number
   kategori: string
+  status: boolean
 }
 
 interface ProdukGambar {
   id: string
   produk_id: string
   url: string
+  storage_path?: string // Tambahkan field untuk menyimpan path storage
 }
 
 export default function EditProdukPage() {
@@ -36,8 +38,25 @@ export default function EditProdukPage() {
     nama: '',
     deskripsi: '',
     harga: '',
-    kategori: ''
+    kategori: '',
+    status: true
   })
+
+  // Fungsi untuk mengekstrak nama file dari URL public Supabase
+  const extractFileNameFromUrl = (url: string): string => {
+    if (url.includes('/storage/v1/object/public/product-images/')) {
+      // Ekstrak nama file dari URL public Supabase
+      const parts = url.split('/storage/v1/object/public/product-images/')
+      return parts[parts.length - 1]
+    } else if (url.startsWith('http')) {
+      // Fallback untuk URL lain
+      const parts = url.split('/')
+      return parts[parts.length - 1]
+    } else {
+      // Jika sudah berupa path storage
+      return url
+    }
+  }
 
   const fetchProduk = useCallback(async () => {
     setIsLoading(true)
@@ -63,19 +82,31 @@ export default function EditProdukPage() {
           nama: produkData.nama,
           deskripsi: produkData.deskripsi,
           harga: produkData.harga.toString(),
-          kategori: produkData.kategori
+          kategori: produkData.kategori,
+          status: produkData.status ?? true // Default ke true jika null/undefined
         })
       }
 
       if (gambarData) {
         const gambarDenganUrl = gambarData.map((g) => {
+          let publicUrl = g.url
+          let storagePath = ''
+
           if (g.url.startsWith('http')) {
-            return { ...g, url: g.url }
+            // Jika sudah URL lengkap, gunakan langsung dan ekstrak storage path
+            publicUrl = g.url
+            storagePath = extractFileNameFromUrl(g.url)
+          } else {
+            // Jika bukan URL lengkap, buat public URL
+            const { data } = supabase.storage.from('product-images').getPublicUrl(g.url)
+            publicUrl = data?.publicUrl ?? ''
+            storagePath = g.url
           }
-          const { data } = supabase.storage.from('product-images').getPublicUrl(g.url)
+
           return {
             ...g,
-            url: data?.publicUrl ?? ''
+            url: publicUrl,
+            storage_path: storagePath
           }
         })
         setGambarList(gambarDenganUrl)
@@ -95,6 +126,10 @@ export default function EditProdukPage() {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target
     setForm((prev) => ({ ...prev, [name]: value }))
+  }
+
+  const handleStatusToggle = () => {
+    setForm((prev) => ({ ...prev, status: !prev.status }))
   }
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -131,14 +166,37 @@ export default function EditProdukPage() {
 
   const handleRemoveExistingImage = async (gambarId: string) => {
     try {
-      const { error } = await supabase
+      // Cari gambar yang akan dihapus
+      const gambarToDelete = gambarList.find(g => g.id === gambarId)
+      
+      if (!gambarToDelete) {
+        throw new Error('Gambar tidak ditemukan')
+      }
+
+      // Hapus dari database terlebih dahulu
+      const { error: deleteDbError } = await supabase
         .from('produk_gambar')
         .delete()
         .eq('id', gambarId)
 
-      if (error) throw error
+      if (deleteDbError) throw deleteDbError
 
+      // Hapus file dari storage jika ada storage_path
+      if (gambarToDelete.storage_path) {
+        const { error: deleteStorageError } = await supabase.storage
+          .from('product-images')
+          .remove([gambarToDelete.storage_path])
+
+        if (deleteStorageError) {
+          console.error('Gagal menghapus file dari storage:', deleteStorageError)
+          // Tidak throw error di sini karena data sudah terhapus dari database
+          // Hanya log sebagai warning
+        }
+      }
+
+      // Update state untuk menghapus gambar dari UI
       setGambarList((prev) => prev.filter(g => g.id !== gambarId))
+      
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       setErrorMsg('Gagal menghapus gambar: ' + error.message)
@@ -164,7 +222,8 @@ export default function EditProdukPage() {
           nama: form.nama,
           deskripsi: form.deskripsi,
           harga: Number(form.harga),
-          kategori: form.kategori
+          kategori: form.kategori,
+          status: form.status
         })
         .eq('id', id)
 
@@ -181,6 +240,7 @@ export default function EditProdukPage() {
 
         if (uploadError) throw uploadError
 
+        // Dapatkan public URL dan simpan URL lengkap ke database
         const { data: publicUrlData } = supabase.storage
           .from('product-images')
           .getPublicUrl(fileName)
@@ -189,7 +249,7 @@ export default function EditProdukPage() {
           .from('produk_gambar')
           .insert({
             produk_id: id,
-            url: publicUrlData.publicUrl
+            url: publicUrlData.publicUrl // Simpan URL lengkap seperti yang diinginkan
           })
 
         if (insertGambarError) throw insertGambarError
@@ -296,8 +356,8 @@ export default function EditProdukPage() {
                 />
               </div>
 
-              {/* Grid untuk Harga dan Kategori */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+              {/* Grid untuk Harga, Kategori, dan Status */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
                 {/* Harga */}
                 <div className="space-y-2">
                   <label className="flex items-center gap-2 text-sm sm:text-base font-semibold text-gray-900">
@@ -332,6 +392,38 @@ export default function EditProdukPage() {
                     <option value="Baju">Baju</option>
                     <option value="Celana">Celana</option>
                   </select>
+                </div>
+
+                {/* Status */}
+                <div className="space-y-2">
+                  <label className="flex items-center gap-2 text-sm sm:text-base font-semibold text-gray-900">
+                    {form.status ? (
+                      <ToggleRight size={18} className="text-green-600" />
+                    ) : (
+                      <ToggleLeft size={18} className="text-red-600" />
+                    )}
+                    Status Produk
+                  </label>
+                  <div className="flex items-center gap-3 p-3 sm:p-4 border-2 border-gray-200 rounded-xl bg-gray-50">
+                    <button
+                      type="button"
+                      onClick={handleStatusToggle}
+                      className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors duration-200 ${
+                        form.status ? 'bg-green-500' : 'bg-red-500'
+                      }`}
+                    >
+                      <span
+                        className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform duration-200 ${
+                          form.status ? 'translate-x-6' : 'translate-x-1'
+                        }`}
+                      />
+                    </button>
+                    <span className={`text-sm sm:text-base font-medium ${
+                      form.status ? 'text-green-700' : 'text-red-700'
+                    }`}>
+                      {form.status ? 'Tersedia' : 'Terjual'}
+                    </span>
+                  </div>
                 </div>
               </div>
 

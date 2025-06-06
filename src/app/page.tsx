@@ -7,6 +7,7 @@ import Hero from "@/components/hero";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import Footer from "@/components/footer";
+import Link from 'next/link';
 
 type Product = {
   id: number;
@@ -125,56 +126,53 @@ export default function Home() {
                 className="!pb-8 !px-0"
               >
               {products.slice(0, 4).map((product, index) => (
-                <SwiperSlide key={product.id} className="!h-auto">
-                  <div className="group h-full w-full">
-                    {/* Product Card - Luxury Fashion Style */}
-                    <div className="relative bg-white h-full w-full flex flex-col overflow-hidden transition-all duration-700 ease-out hover:shadow-2xl hover:shadow-gray-900/10">
-                      
-                      {/* Image Container - Fashion Magazine Style */}
-                      <div className="relative overflow-hidden bg-gray-50 w-full" style={{ aspectRatio: '3/4' }}>
-                        {/* Overlay untuk efek premium */}
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/5 via-transparent to-transparent z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                        
-                        <img
-                          src={product.gambar || "/default-image.png"}
-                          alt={product.nama}
-                          className="w-full h-full object-cover transition-all duration-700 ease-out group-hover:scale-[1.02]"
-                          loading="lazy"
-                        />
-                        
-                        {/* Subtle number indicator */}
-                        <div className="absolute top-3 left-3 sm:top-4 sm:left-4 z-20">
-                          <span className="text-xs font-light text-white bg-black/20 backdrop-blur-sm px-2 py-1 tracking-wider">
-                            {String(index + 1).padStart(2, '0')}
-                          </span>
-                        </div>
+  <SwiperSlide key={product.id} className="!h-auto">
+    <Link href={`/collection/produk/${product.id}`} className="group h-full w-full block">
+      {/* Product Card - Luxury Fashion Style */}
+      <div className="relative bg-white h-full w-full flex flex-col overflow-hidden transition-all duration-700 ease-out hover:shadow-2xl hover:shadow-gray-900/10">
+        
+        {/* Image Container */}
+        <div className="relative overflow-hidden bg-gray-50 w-full" style={{ aspectRatio: '3/4' }}>
+          <div className="absolute inset-0 bg-gradient-to-t from-black/5 via-transparent to-transparent z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+          
+          <img
+            src={product.gambar || "/default-image.png"}
+            alt={product.nama}
+            className="w-full h-full object-cover transition-all duration-700 ease-out group-hover:scale-[1.02]"
+            loading="lazy"
+          />
 
-                        {/* Hover overlay dengan tombol */}
-                        <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-all duration-500 flex items-center justify-center z-20">
-                          <button className="bg-white text-black px-4 sm:px-6 py-2 sm:py-2.5 text-xs sm:text-sm font-light tracking-wider hover:bg-gray-100 transition-colors duration-300 transform translate-y-4 group-hover:translate-y-0">
-                            VIEW DETAILS
-                          </button>
-                        </div>
-                      </div>
+          <div className="absolute top-3 left-3 sm:top-4 sm:left-4 z-20">
+            <span className="text-xs font-light text-white bg-black/20 backdrop-blur-sm px-2 py-1 tracking-wider">
+              {String(index + 1).padStart(2, '0')}
+            </span>
+          </div>
 
-                      {/* Content - Minimal & Elegant */}
-                      <div className="flex-1 p-4 sm:p-5 lg:p-6 flex flex-col justify-between w-full">
-                        <div className="space-y-2 sm:space-y-3">
-                          <h3 className="text-xs sm:text-sm lg:text-base font-light text-gray-900 leading-relaxed tracking-wide line-clamp-2 group-hover:text-gray-600 transition-colors duration-300">
-                            {product.nama.toUpperCase()}
-                          </h3>
-                          
-                          <div className="space-y-2">
-                            <p className="text-sm sm:text-lg lg:text-xl font-light text-gray-900 tracking-wide">
-                              Rp{product.harga.toLocaleString("id-ID")}
-                            </p>
-                            <div className="w-6 sm:w-8 h-px bg-gray-300 group-hover:w-8 sm:group-hover:w-12 group-hover:bg-gray-600 transition-all duration-500"></div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </SwiperSlide>
+          <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-all duration-500 flex items-center justify-center z-20">
+            <span className="bg-white text-black px-4 sm:px-6 py-2 sm:py-2.5 text-xs sm:text-sm font-light tracking-wider hover:bg-gray-100 transition-colors duration-300 transform translate-y-4 group-hover:translate-y-0">
+              VIEW DETAILS
+            </span>
+          </div>
+        </div>
+
+        {/* Content */}
+        <div className="flex-1 p-4 sm:p-5 lg:p-6 flex flex-col justify-between w-full">
+          <div className="space-y-2 sm:space-y-3">
+            <h3 className="text-xs sm:text-sm lg:text-base font-light text-gray-900 leading-relaxed tracking-wide line-clamp-2 group-hover:text-gray-600 transition-colors duration-300">
+              {product.nama.toUpperCase()}
+            </h3>
+            
+            <div className="space-y-2">
+              <p className="text-sm sm:text-lg lg:text-xl font-light text-gray-900 tracking-wide">
+                Rp{product.harga.toLocaleString("id-ID")}
+              </p>
+              <div className="w-6 sm:w-8 h-px bg-gray-300 group-hover:w-8 sm:group-hover:w-12 group-hover:bg-gray-600 transition-all duration-500"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </Link>
+  </SwiperSlide>
               ))}
             </Swiper>
             </div>
