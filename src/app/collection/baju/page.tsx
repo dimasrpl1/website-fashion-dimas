@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-html-link-for-pages */
 'use client';
 
 import { useEffect, useState } from 'react';
@@ -89,7 +90,7 @@ export default function BajuPage() {
   };
 
   return (
-    <div className="min-h-screen font-[family-name:var(--font-geist-sans)] text-black bg-gradient-to-br from-rose-50 via-white to-pink-50">
+    <div className="min-h-screen font-[family-name:var(--font-geist-sans)] text-black bg-white">
       <Navbar />
 
       {/* Hero Section */}
@@ -116,6 +117,30 @@ export default function BajuPage() {
           </div>
         </div>
       </section>
+
+      {/* Breadcrumb */}
+      <div className="w-full">
+        <div className=" max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-6 mb-2">
+          <nav className="flex items-center space-x-2 text-sm font-light text-gray-600">
+            <a 
+              href="/" 
+              className="hover:text-gray-800 transition-colors uppercase tracking-wide">
+              Home
+            </a>
+            <span className="text-gray-400">/</span>
+            <a 
+              href="/collection" 
+              className="hover:text-gray-800 transition-colors uppercase tracking-wide">
+              Collection
+            </a>
+            <span className="text-gray-400">/</span>
+            <span className="hover:text-gray-800 transition-colors uppercase tracking-wide">
+              SHIRT
+            </span>
+          </nav>
+          
+        </div>
+      </div>
 
       {/* Filter Section */}
       <section className="bg-white/80 backdrop-blur-sm border-b border-gray-200/50 top-20 z-40">
@@ -155,7 +180,7 @@ export default function BajuPage() {
       </section>
 
       {/* Products Section */}
-      <main className="max-w-7xl mx-auto px-6 py-12">
+      <main className="w-full px-2 py-12">
         {loading ? (
           <div className="flex justify-center items-center py-20">
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-gray-900"></div>
@@ -167,7 +192,7 @@ export default function BajuPage() {
                 <p className="text-xl font-light text-gray-600">No products found matching your criteria.</p>
               </div>
             ) : (
-              <div className={`grid gap-4 ${
+              <div className={`grid gap-2 w-full ${
                 gridView === 'single' 
                   ? 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-4' 
                   : 'grid-cols-2 sm:grid-cols-2 lg:grid-cols-4'
@@ -178,7 +203,7 @@ export default function BajuPage() {
                     className="group relative bg-white rounded-sm overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 border border-gray-100"
                     style={{ animationDelay: `${index * 100}ms` }}
                   >
-                    <div className="relative w-full h-60 sm:h-72 lg:h-80 overflow-hidden">
+                    <div className="relative w-full h-80 sm:h-96 lg:h-[400px] xl:h-[450px] overflow-hidden">
                       <img
                         src={product.gambar || "/default-image.png"}
                         alt={product.nama}
@@ -186,11 +211,11 @@ export default function BajuPage() {
                       />
                       <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-all duration-300"></div>
                     </div>
-                    <div className="p-2 sm:p-3">
-                      <h3 className="font-light tracking-wide text-gray-900 mb-1 group-hover:text-gray-700 transition-colors text-xs sm:text-sm">
+                    <div className="p-3 sm:p-4">
+                      <h3 className="font-light tracking-wide text-gray-900 mb-1 group-hover:text-gray-700 transition-colors text-xs sm:text-sm truncate">
                         {product.nama}
                       </h3>
-                      <p className="font-light text-gray-800 text-xs sm:text-sm">
+                      <p className="font-light text-gray-600 text-xs sm:text-sm">
                         Rp {product.harga.toLocaleString("id-ID")}
                       </p>
                     </div>
