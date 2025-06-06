@@ -5,9 +5,8 @@ import Footer from '@/components/footer';
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
 
-export default async function ProdukDetailPage(props: { params: { id: string } }) {
-  const params = await props.params; // WAJIB di Next.js 15
-  const id = params.id;
+export default async function ProdukDetailPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params; // params adalah Promise, harus di-await di sini
 
   const { data: product, error } = await supabase
     .from('produk')
