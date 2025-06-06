@@ -83,7 +83,7 @@ export default function Home() {
 </div>
 
 
-          {/* Products Grid/Slider */}
+          {/* Products Grid/Slider - Latest 4 Products Only */}
           <div className="w-full max-w-7xl mx-auto">
             <div className="relative overflow-hidden">
               <Swiper
@@ -124,7 +124,7 @@ export default function Home() {
                 }}
                 className="!pb-8 !px-0"
               >
-              {products.map((product, index) => (
+              {products.slice(0, 4).map((product, index) => (
                 <SwiperSlide key={product.id} className="!h-auto">
                   <div className="group h-full w-full">
                     {/* Product Card - Luxury Fashion Style */}
