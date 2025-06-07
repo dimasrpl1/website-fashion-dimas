@@ -113,10 +113,12 @@ export default function Hero() {
               >
                 <div className="relative group cursor-pointer">
                   {/* Decorative Frame */}
-                  <div className="absolute -inset-4 sm:-inset-6 lg:-inset-8 bg-gradient-to-br from-stone-100 via-white to-stone-50 rounded-2xl transform rotate-1 transition-transform duration-500"></div>
+                  
                   
                   {/* Main Image Container - Adjusted to match image aspect ratio */}
-                  <div className="relative overflow-hidden bg-stone-100 rounded-xl shadow-2xl">
+                  <div className="relative overflow-hidden rounded-xl shadow-2xl"
+                    style={{ backgroundColor: '#f8f9f4' }}
+                  >
                     <img
                       src="/image/image3.jpg"
                       alt="Elegant Couture Collection"
@@ -137,7 +139,7 @@ export default function Hero() {
 
                     {/* Made by NiMpo Badge */}
                     <div className="absolute bottom-6 sm:bottom-8 lg:bottom-10 left-6 sm:left-8 lg:left-10 transition-all duration-500">
-                      <div className="bg-stone-900/95 backdrop-blur-md px-4 sm:px-6 py-2 sm:py-3 text-xs sm:text-sm font-light tracking-wider text-white shadow-lg rounded-full">
+                      <div className={`bg-stone-900/95 backdrop-blur-md px-4 sm:px-6 py-2 sm:py-3 text-xs sm:text-sm font-light tracking-wider text-white shadow-lg rounded-full transition-transform duration-300 ${isImageHovered ? 'scale-110' : 'scale-100'}`}>
                         MADE BY NIMPO
                       </div>
                     </div>
