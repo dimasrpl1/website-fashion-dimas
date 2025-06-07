@@ -91,7 +91,7 @@ export default function Navbar() {
               {[
                 { name: 'Home', href: '/' },
                 { name: 'Collection', href: '/collection' },
-                { name: 'Contact', href: '#contact' }
+                { name: 'Contact', href: '/kontak' }
               ].map((item) => (
                 <Link
                   key={item.name}
@@ -112,7 +112,7 @@ export default function Navbar() {
             {/* Desktop CTA - Sophisticated */}
             <div className="hidden lg:flex items-center gap-4 xl:gap-6">
               <Link
-                href="#contact"
+                href="/kontak"
                 className="group relative overflow-hidden border border-gray-900 px-4 xl:px-6 py-2 xl:py-2.5 text-xs xl:text-sm font-light tracking-widest text-gray-900 hover:text-white transition-all duration-500 ease-out"
               >
                 <span className="relative z-10">INQUIRE</span>
@@ -152,7 +152,7 @@ export default function Navbar() {
                 {[
                   { name: 'Home', href: '/' },
                   { name: 'Collection', href: '/collection' },
-                  { name: 'Contact', href: '#contact' }
+                  { name: 'Contact', href: '/kontak' }
                 ].map((item, index) => (
                   <Link
                     key={item.name}
@@ -171,7 +171,7 @@ export default function Navbar() {
                 {/* Mobile CTA */}
                 <div className="px-4 sm:px-6 pt-4 sm:pt-6">
                   <Link
-                    href="#contact"
+                    href="/kontak"
                     onClick={() => setIsMobileMenuOpen(false)}
                     className="group relative overflow-hidden block w-full text-center border border-gray-900 px-4 py-3 sm:py-4 text-sm sm:text-base font-light tracking-widest text-gray-900 hover:text-white transition-all duration-500 ease-out"
                   >

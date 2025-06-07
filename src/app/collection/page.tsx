@@ -356,14 +356,15 @@ export default function CollectionPage() {
     </div>
   );
 
-  return product.status ? (
-    <a href={`/collection/produk/${product.id}`} key={product.id} className="cursor-pointer">
+  return (
+    <a
+      href={`/collection/produk/${product.id}`}
+      key={product.id}
+      tabIndex={0}
+      aria-disabled={!product.status}
+    >
       {CardContent}
     </a>
-  ) : (
-    <div key={product.id} className="cursor-not-allowed">
-      {CardContent}
-    </div>
   );
 })}
 

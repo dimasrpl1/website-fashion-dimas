@@ -31,6 +31,7 @@ export default function Home() {
             url
           )
         `)
+        .eq("status", true) // Filter hanya produk dengan status true
         .order("created_at", { ascending: false })
         .limit(10);
 

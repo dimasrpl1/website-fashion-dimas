@@ -246,12 +246,15 @@ export default function CelanaPage() {
     </div>
   );
 
-  return product.status ? (
-    <a href={`/collection/produk/${product.id}`} key={product.id}>
+  return (
+    <a
+      href={`/collection/produk/${product.id}`}
+      key={product.id}
+      tabIndex={0}
+      aria-disabled={!product.status}
+    >
       {CardContent}
     </a>
-  ) : (
-    <div key={product.id}>{CardContent}</div>
   );
 })}
 
