@@ -78,10 +78,10 @@ export default function Navbar() {
               </div>
               <div className="flex flex-col">
                 <span className="text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl font-light tracking-tight text-gray-900 transition-colors duration-300 group-hover:text-gray-700">
-                  ATELIER
+                  NOJPROJECT
                 </span>
                 <span className="text-xs sm:text-xs md:text-sm lg:text-sm xl:text-base font-extralight tracking-widest text-gray-500 uppercase">
-                  Collections
+                  fashion collection
                 </span>
               </div>
             </div>
