@@ -76,12 +76,12 @@ export default function Navbar() {
                   priority
                 /> */}
               </div>
-              <div className="flex flex-col">
+              <div className="flex flex-col items-start leading-tight">
                 <span className="text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl font-light tracking-tight text-gray-900 transition-colors duration-300 group-hover:text-gray-700">
-                  NOJPROJECT
+                  NOJ
                 </span>
-                <span className="text-xs sm:text-xs md:text-sm lg:text-sm xl:text-base font-extralight tracking-widest text-gray-500 uppercase">
-                  fashion collection
+                <span className="text-[0.7em] sm:text-xs md:text-sm lg:text-base xl:text-lg font-extralight tracking-[0.35em] text-gray-500 uppercase ml-[2px] mt-[-2px]">
+                  PROJECT
                 </span>
               </div>
             </div>
