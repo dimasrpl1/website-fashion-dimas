@@ -87,7 +87,7 @@ export default function Hero() {
                     className="group relative inline-flex items-center justify-center px-8 sm:px-10 lg:px-12 xl:px-14 py-4 sm:py-5 text-sm sm:text-base lg:text-lg font-light tracking-[0.15em] text-white bg-stone-900 hover:bg-stone-800 transition-all duration-500 ease-out overflow-hidden transform hover:scale-[1.02] active:scale-[0.98] shadow-lg hover:shadow-xl"
                   >
                     <span className="relative z-10 flex items-center">
-                      EXPLORE COLLECTION
+                      EXPLORE COLLECTIONS
                       <svg className="ml-3 w-4 h-4 sm:w-5 sm:h-5 transform group-hover:translate-x-2 transition-transform duration-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                       </svg>
